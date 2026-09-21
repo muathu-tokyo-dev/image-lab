@@ -577,13 +577,13 @@ pip install -r requirements.txt
 ## 4. Chạy FastAPI Server
 
 ```bash
-uvicorn main:app --reload
+uvicorn main:app --reload --port 5500
 ```
 
 Nếu server chạy thành công:
 
 ```text
-Uvicorn running on http://127.0.0.1:8000
+Uvicorn running on http://127.0.0.1:5500
 ```
 
 ---
@@ -593,7 +593,7 @@ Uvicorn running on http://127.0.0.1:8000
 Truy cập:
 
 ```text
-http://127.0.0.1:8000
+http://127.0.0.1:5500
 ```
 
 ---
