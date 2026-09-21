@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEON // IMAGE LAB</title>
+  <link rel="stylesheet" href="../static/style.css" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <main class="app-shell">
+    <header class="topbar pixel-panel">
+      <div>
+        <p class="eyebrow">FASTAPI / OPENCV / REALTIME</p>
+        <h1>NEON // IMAGE LAB</h1>
+      </div>
+      <div class="top-actions">
+        <label class="pixel-button primary" for="fileInput">IMPORT</label>
+        <input id="fileInput" type="file" accept="image/*" hidden />
+        <button id="exportBtn" class="pixel-button" disabled>EXPORT</button>
+        <button id="resetBtn" class="pixel-button danger" disabled>RESET</button>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <aside class="sidebar pixel-panel">
+        <div class="panel-title-row">
+          <h2>TECHNIQUE</h2>
+          <span id="statusDot" class="status-dot"></span>
+        </div>
+
+        <div class="technique-switch">
+          <button class="tech-card active" data-technique="hsv">
+            <span class="tech-code">01</span>
+            <strong>HSV</strong>
+            <small>Điều chỉnh màu sắc theo Hue / Saturation / Value.</small>
+          </button>
+          <button class="tech-card" data-technique="histogram">
+            <span class="tech-code">02</span>
+            <strong>HISTOGRAM</strong>
+            <small>Điều chỉnh vùng sáng tối theo tonal range.</small>
+          </button>
+        </div>
+
+        <div class="divider"></div>
+
+        <section id="hsvControls" class="control-group active">
+          <h3>HSV SETTINGS</h3>
+          <div class="slider-row">
+            <div class="slider-label"><span>HUE</span><output id="hueOut">0°</output></div>
+            <input id="hue" type="range" min="-180" max="180" value="0" step="1" />
+          </div>
+          <div class="slider-row">
+            <div class="slider-label"><span>SATURATION</span><output id="saturationOut">0</output></div>
+            <input id="saturation" type="range" min="-100" max="100" value="0" step="1" />
+          </div>
+          <div class="slider-row">
+            <div class="slider-label"><span>VALUE</span><output id="valueOut">0</output></div>
+            <input id="value" type="range" min="-100" max="100" value="0" step="1" />
+          </div>
+          <p class="hint">Hue xoay màu; Saturation tăng/giảm độ rực; Value thay đổi độ sáng tổng thể.</p>
+        </section>
+
+        <section id="histogramControls" class="control-group">
+          <h3>HISTOGRAM SETTINGS</h3>
+          <div class="slider-row"><div class="slider-label"><span>BLACKS</span><output id="blacksOut">0</output></div><input id="blacks" type="range" min="-100" max="100" value="0" /></div>
+          <div class="slider-row"><div class="slider-label"><span>SHADOWS</span><output id="shadowsOut">0</output></div><input id="shadows" type="range" min="-100" max="100" value="0" /></div>
+          <div class="slider-row"><div class="slider-label"><span>MIDTONES</span><output id="midtonesOut">0</output></div><input id="midtones" type="range" min="-100" max="100" value="0" /></div>
+          <div class="slider-row"><div class="slider-label"><span>HIGHLIGHTS</span><output id="highlightsOut">0</output></div><input id="highlights" type="range" min="-100" max="100" value="0" /></div>
+          <div class="slider-row"><div class="slider-label"><span>WHITES</span><output id="whitesOut">0</output></div><input id="whites" type="range" min="-100" max="100" value="0" /></div>
+          <p class="hint">Các slider tác động mềm lên từng vùng luminance thay vì cắt ảnh thành 5 vùng cứng.</p>
+        </section>
+      </aside>
+
+      <section class="editor-column">
+        <div class="viewer-grid">
+          <article class="image-card pixel-panel">
+            <div class="image-card-head">
+              <span>INPUT // ORIGINAL</span><span id="imageMeta">NO IMAGE</span>
+            </div>
+            <div class="image-stage checkerboard">
+              <div id="emptyBefore" class="empty-state">IMPORT IMAGE<br/><span>JPG / PNG / WEBP</span></div>
+              <img id="beforeImage" alt="Original image" />
+            </div>
+          </article>
+
+          <article class="image-card pixel-panel">
+            <div class="image-card-head">
+              <span>OUTPUT // REALTIME</span><span id="processingText">IDLE</span>
+            </div>
+            <div class="image-stage checkerboard">
+              <div id="emptyAfter" class="empty-state">PREVIEW<br/><span>WAITING FOR INPUT</span></div>
+              <img id="afterImage" alt="Edited image" />
+              <div id="loader" class="loader hidden">PROCESSING...</div>
+            </div>
+          </article>
+        </div>
+
+        <section class="histogram-panel pixel-panel">
+          <div class="hist-title"><span>LUMINANCE MONITOR</span><span>0 — 255</span></div>
+          <canvas id="histogramCanvas" width="900" height="150"></canvas>
+        </section>
+      </section>
+    </section>
+
+    <footer>
+      <span>LOCAL IMAGE PROCESSOR // NO CLOUD STORAGE REQUIRED</span>
+      <span>HSV + TONAL HISTOGRAM</span>
+    </footer>
+  </main>
+
+  <script src="../static/app.js"></script>
+</body>
+</html>
